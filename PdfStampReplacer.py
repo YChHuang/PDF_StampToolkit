@@ -180,6 +180,8 @@ def copy_stamps(base_path, stamped_path, output_path):
     print("✅ 完成，輸出：", output_path)
 
 
+
+
 # 直接執行
 base_pdf    = r"C:\Users\user\Desktop\PDFTEST\base.pdf"
 stamped_pdf = r"C:\Users\user\Desktop\PDFTEST\stamped.pdf"

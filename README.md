@@ -7,11 +7,11 @@
 後來查資料後，得知有pypdf這類庫可以編輯pdf，因此此想法可行。
 
 ### 困難點
-#### 將需求組織成與AI能聽懂的prompt：
+##### 將需求組織成與AI能聽懂的prompt：
 - 嘗試請AI寫了段貼印章的code，第一個遇到的問題是AI不知道什麼是印章，後來請AI寫一段print每頁的資訊，並比對沒有印章的頁面後  
 得知印章annotation的標籤是"stamp"。
 - 後續用annots和stamp等詞彙，便能精準指出我的需求。
-#### AI無法理解錯誤：
+##### AI無法理解錯誤：
 - 請AI寫了段按照相對位置貼stamp的code後，發現有特定頁面會變形怪異，無法正確貼上。
 - 後續請AI寫一份能夠print出每個頁面的資訊的腳本，於是我比對正確與錯誤的葉面後，  
 發現有些頁面的orientation是landscape, rotate = 0;有些是portrait, rotate = 270，儘管他們看起來一樣。

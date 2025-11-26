@@ -8,7 +8,7 @@
 執行腳本即可，我是用vs code直接跑
 
 ### 功能介紹與用法
-用ExminePdfOrientation.py 檢查是否需要修正pdf
+用ExminePdfOrientation.py 檢查是否需要修正pdf，  
 會像這樣(Orientation_Rotation)：
 ```
 不統一，分類如下：
@@ -30,5 +30,9 @@ pypdf 6.1.0
 
 收到需求，需要將pdf上的印章蓋到另一份對應檔案上，由於數量有些龐大，想到能用python+AI解決。  
 後來查資料後，得知有pypdf這類庫可以編輯pdf，因此此想法可行。
-拿資料測試了一下，目前版本可以完成任務，先停在這裡。
 
+嘗試請AI寫了段貼印章的code，第一個遇到的問題是AI不知道什麼是印章，後來請AI寫一段print每頁的資訊，並比對沒有印章的頁面後  
+得知印章annotation的標籤是"stamp"。
+後續用annotation和stamp等詞彙，便能精準指出我的需求。
+
+拿資料測試了一下，目前版本可以完成任務，版本先停在這裡。

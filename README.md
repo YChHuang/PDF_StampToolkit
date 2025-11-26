@@ -1,3 +1,5 @@
+### PDF小工具
+
 ## 使用方法
 用ExminePdfOrientation.py 檢查是否需要修正pdf
 會像這樣(Orientation_Rotation)：
@@ -17,10 +19,10 @@
 而 PdfStampReplacer.py 可以把stamp蓋到另一份資料上，但要先保證oreintation正確。
 
 ## 技術棧
-Python 3.13
+Python 3.13  
 pypdf 6.1.0
 
-### 背景
+## 背景
 
 收到需求，需要將pdf上的印章蓋到另一份對應檔案上，由於數量有些龐大，想到能用python+AI解決。  
 後來查資料後，得知有pypdf這類庫可以編輯pdf，因此此想法可行。

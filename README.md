@@ -1,4 +1,4 @@
-# PDF小工具
+# PDF修正與自動蓋章小工具
 
 ## 使用方法
 用ExminePdfOrientation.py 檢查是否需要修正pdf
@@ -11,12 +11,9 @@
 ```
 這樣就抓出有內鬼了
 
-然後AjustPDFsOrientation.py能將portrait, rotate = 270的假landscape變成真的landscape
+然後AjustPDFsOrientation.py能將portrait, rotate = 270的假landscape變成真的landscape(之後再考慮寫成可以自訂最終樣貌的版本，目前好忙)  
 
-之後再考慮寫成可以自訂最終樣貌的版本，目前好忙
-
-
-而 PdfStampReplacer.py 可以把stamp蓋到另一份資料上，但要先保證oreintation正確。
+而 PdfStampReplacer.py 可以把stamp蓋到另一份資料上，但要先保證oreintation正確，所以可以用前面的工具先歸零。
 
 ## 技術棧
 Python 3.13  

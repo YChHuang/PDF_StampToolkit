@@ -7,9 +7,11 @@
 幫這兩個變數依序指定為輸入的pdf及輸出路徑(輸出檔案可以不存在，但要用.pdf結尾，此外請特別注意，檔案若存在會直接取代掉，沒有警告)
 執行腳本即可，我是用vs code直接跑
 
-### 功能介紹與用法
-用ExminePdfOrientation.py 檢查是否需要修正pdf，  
-會像這樣(Orientation_Rotation)：
+### 功能介紹與用法  
+
+用 [ExminePdfOrientation.py](Scripts/ExminePdfOrientation.py) 檢查是否需要修正pdf，  
+會像這樣(OrientationType_Rotation = [])：  
+
 ```
 不統一，分類如下：
   Landscape_0 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 134, 135, 136]
@@ -18,9 +20,9 @@
 
 這樣就抓出有內鬼了
 
-然後AjustPDFsOrientation.py能將portrait, rotate = 270的假landscape變成真的landscape(之後再考慮寫成可以自訂最終樣貌的版本，目前好忙)  
+然後[AjustPDFsOrientation.py](Scripts/AjustPDFsOrientation.py)能將portrait, rotate = 270的假landscape變成真的landscape(之後再考慮寫成可以自訂最終樣貌的版本，目前好忙)  
 
-而 PdfStampReplacer.py 可以把stamp蓋到另一份資料上，但要先保證oreintation正確，所以遇到雜亂的檔案可以用前面的工具先歸零。
+而 [PdfStampReplacer.py](Scripts/PdfStampReplacer.py) 可以把stamp蓋到另一份資料上，但要先保證oreintation正確，所以遇到雜亂的檔案可以用前面的工具先歸零。
 
 ## 技術棧
 Python 3.13  

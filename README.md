@@ -1,13 +1,8 @@
 # PDF修正與自動蓋章小工具
 
-## 使用方法
+## 功能介紹與使用方法
 
-### 基本用法
-檔案內每一個.py底下都有兩個變數input_pdf 和 output_pdf   
-幫這兩個變數依序指定為輸入的pdf及輸出路徑(輸出檔案可以不存在，但要用.pdf結尾，此外請特別注意，檔案若存在會直接取代掉，沒有警告)
-執行腳本即可，我是用vs code直接跑
-
-### 功能介紹與用法  
+### 功能介紹 
 
 用 [ExminePdfOrientation.py](Scripts/ExminePdfOrientation.py) 檢查是否需要修正pdf，  
 會像這樣(OrientationType_Rotation = [])：  
@@ -23,6 +18,11 @@
 然後[AjustPDFsOrientation.py](Scripts/AjustPDFsOrientation.py)能將portrait, rotate = 270的假landscape變成真的landscape(之後再考慮寫成可以自訂最終樣貌的版本，目前好忙)  
 
 而 [PdfStampReplacer.py](Scripts/PdfStampReplacer.py) 可以把stamp蓋到另一份資料上，但要先保證oreintation正確，所以遇到雜亂的檔案可以用前面的工具先歸零。
+
+### 基本用法
+檔案內每一個.py底下都有兩個變數input_pdf 和 output_pdf   
+幫這兩個變數依序指定為輸入的pdf及輸出路徑(輸出檔案可以不存在，但要用.pdf結尾，此外請特別注意，檔案若存在會直接取代掉，沒有警告)
+執行腳本即可，我是用vs code直接跑
 
 ## 技術棧
 Python 3.13  
@@ -45,3 +45,59 @@ pypdf 6.1.0
 後續用annotation和stamp等詞彙，便能精準指出我的需求。
 
 拿資料測試了一下，目前版本可以完成任務，版本先停在這裡。
+
+## 筆記
+
+### 修正旋轉方向:
+
+PDF 的畫面幾何實際分成三層：
+
+- Page 世界（全域座標）
+- Annotation Rect 世界（互動框世界）
+- Stamp local 世界（stamp的local繪圖世界）
+
+它們彼此獨立、具語意層級關係，但不會自動同步。
+
+### Page
+
+Page 內主要由 MediaBox 與 /Rotate 定義世界座標。
+
+在「假橫向 PDF」中，內容其實已經被物理旋轉，但仍殘留 `/Rotate=270` 的邏輯標記。
+
+此流程會直接把 Page 世界轉正：
+
+```python
+tf = Transformation().rotate(90).translate(h, 0)
+page.add_transformation(tf)
+page.mediabox = RectangleObject([0, 0, h, w])
+page.rotation = 0
+```
+也就是把整個世界逆時針旋轉 90° 並平移回第一象限，並同步交換紙張邊界  
+
+
+### Annots
+
+Annotation Rect 是定義在 Page 世界中的資料欄位，不會自動跟隨 Page CTM。  
+
+因此必須對所有 /Rect 套用同一組同步仿射矩陣，  
+讓互動框仍維持在正確的頁面座標位置。  
+
+### Stamps
+
+Stamp 的實際顯示是：
+```
+Final = PageCTM · ( StampLocalCTM · Geometry )
+```
+當 PageCTM 被改寫後，Stamp會變成：
+```
+Final = (PageCTM · M) · ( StampLocalCTM · Geometry )
+```
+Stamp被多套了一次 M。  
+
+為了讓畫面維持原本正確顯示，需要把 Stamp local 世界轉譯到新世界：  
+```
+StampLocalCTM := M⁻¹ · StampLocalCTM
+```
+也就是在 Stamp AP stream 內插入反矩陣並移除舊 /Matrix。  
+
+這樣才能在新 Page 世界下維持相同的最終畫面位置與幾何語意。  

@@ -1,4 +1,4 @@
-# PDF修正與自動蓋章小工具
+# PDF修正假橫向PDF與自動蓋章小工具
 
 ## 功能介紹與使用方法
 
@@ -15,7 +15,7 @@
 
 這樣就抓出有內鬼了
 
-然後[AjustPDFsOrientation.py](Scripts/AjustPDFsOrientation.py)能將portrait, rotate = 270的假landscape變成真的landscape(之後再考慮寫成可以自訂最終樣貌的版本，目前好忙)  
+然後[AjustPDFsOrientation.py](Scripts/AjustPDFsOrientation.py)能將portrait, rotate = 270的假landscape變成真的landscape   
 
 而 [PdfStampReplacer.py](Scripts/PdfStampReplacer.py) 可以把stamp蓋到另一份資料上，但要先保證oreintation正確，所以遇到雜亂的檔案可以用前面的工具先歸零。
 

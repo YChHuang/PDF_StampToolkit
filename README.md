@@ -31,7 +31,7 @@ pip install fastapi uvicorn pypdf python-multipart
 ```bash
 uvicorn server:app --reload
 ```
-或直接執行start.bat
+或直接執行run.bat
 
 啟動後開啟瀏覽器到
 ```

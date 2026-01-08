@@ -3,12 +3,51 @@
 ## 功能介紹與使用方法
 
 ### 功能介紹 
+![alt text](Totur/pciture/Screenshot1.png)
+
+本工具會診斷與修復下列 PDF 幾何問題：  
+
+錯誤 /Rotate 標記導致的假橫向頁面  
+
+Page / Annotation / Stamp 幾何座標不同步  
+
+混合方向 PDF（部分頁面正常、部分頁面錯誤）  
 
 ### 基本用法
 
-## 技術棧
-Python 3.13  
-pypdf 6.1.0
+1. 上傳pdf後
+2. 點選 Upload PDF 載入 PDF
+3. 點選 Analyze 查看幾何診斷摘要
+4. 點選 Fix PDF 下載修正後的檔案
+
+## 安裝方法與技術棧
+
+### 安裝 Setup
+
+```bash
+pip install fastapi uvicorn pypdf python-multipart
+```
+啟動
+```bash
+uvicorn server:app --reload
+```
+或直接執行start.bat
+
+啟動後開啟瀏覽器到
+```
+http://127.0.0.1:8000
+```
+
+### 技術棧
+
+| 技術 | 版本 |
+|-----|-----|
+| Python | 3.13 |
+| FastAPI | 0.128.0 |
+| Uvicorn | 0.40.0 |
+| pypdf | 6.1.0 |
+| python-multipart | 0.0.21 |
+
 
 ## 背景
 
@@ -19,14 +58,13 @@ pypdf 6.1.0
 請AI多log幾個資訊後，發現是有騙子landscape，它的原貌是portrait+270度的rotation  
 因此將問題拆成：轉正與蓋印章。 
 
-轉正問題：測試幾個prompt後，AjustPDFsOrientation.py誕生。
-
+TODO
 蓋印章問題：  
 第一個遇到的問題是AI不知道什麼是印章。  
 請AI寫一段print每頁的資訊，並比對沒有印章的頁面後，得知印章annotation的標籤是"stamp"。  
 後續用annotation和stamp等詞彙，便能精準指出我的需求。
 
-拿資料測試了一下，目前版本可以完成任務，版本先停在這裡。
+目前蓋印章還沒寫進去UI內
 
 ## 筆記
 

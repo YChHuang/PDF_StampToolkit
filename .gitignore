@@ -1,0 +1,17 @@
+# Runtime generated data
+/data/
+/uploads/
+/outputs/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# OS noise
+.DS_Store
+Thumbs.db

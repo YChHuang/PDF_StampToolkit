@@ -2,14 +2,24 @@ from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 import shutil, uuid, os
 from urllib.parse import quote
-from Core import analyze, fix
+from core import analyze, fix
 
 app = FastAPI()
 
-UPLOAD = "uploads"
-OUTPUT = "outputs"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+DATA_DIR = os.path.join(BASE_DIR, "data")
+TMP_DIR  = os.path.join(DATA_DIR, "tmp")
+UPLOAD   = os.path.join(BASE_DIR, "uploads")
+OUTPUT   = os.path.join(BASE_DIR, "outputs")
+
+os.makedirs(TMP_DIR, exist_ok=True)
 os.makedirs(UPLOAD, exist_ok=True)
 os.makedirs(OUTPUT, exist_ok=True)
+
+CURRENT = os.path.join(DATA_DIR, "current.pdf")
+
+
 
 @app.get("/")
 def home(result: str = ""):
@@ -41,22 +51,22 @@ def home(result: str = ""):
 
 
 
-CURRENT = "current.pdf"
-
 @app.post("/upload")
 def upload_api(file: UploadFile = File(None)):
     if not file or file.filename == "":
         return RedirectResponse("/", 302)
 
-    tmp = CURRENT + ".tmp"
-    with open(tmp, "wb") as f:
+    tmp_path = os.path.join(TMP_DIR, str(uuid.uuid4()) + ".pdf")
+
+    with open(tmp_path, "wb") as f:
         shutil.copyfileobj(file.file, f)
 
     # 確保寫入完成後再覆蓋 current
-    if os.path.getsize(tmp) > 0:
-        os.replace(tmp, CURRENT)
+    if os.path.getsize(tmp_path) > 0:
+        os.replace(tmp_path, CURRENT)
 
     return RedirectResponse("/", 302)
+
 
 
 @app.post("/analyze")
